@@ -12,6 +12,7 @@ public class Client
     private String cpf;
     private String contact;
     private String email;
+    private Boolean isMonthly;
 
 
     /**
@@ -29,6 +30,7 @@ public class Client
        this.cpf = cpf;
        this.contact = contact;
        this.email = email;
+       isMonthly = false;
     }
 
 

@@ -31,9 +31,7 @@ public class ParkingData
 
     public void getVehicleFromList(String plaque)
     {
-
-
-
+        listOfVehicles.get(plaque);
 
     }
 

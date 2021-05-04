@@ -15,11 +15,20 @@ public class System
 
     public System()
     {
+        //return the current frame
         anInterface = new Interface();
+        //start a new DataBase (abstraction of)
         parkingData = new ParkingData();
+        //start the list of price
         prices = new Prices();
+        //start a daily report
         report = new Report();
+
+
     }
+
+
+
 
 
 
