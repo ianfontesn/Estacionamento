@@ -1,9 +1,11 @@
+import java.util.Date;
+
 public class Truck extends Vehicle
 {
 
-    public Truck(String plaque, String model, String color, Client client)
+    public Truck(String id, String plaque, String model, String color, Date entryHour, Client client)
     {
-        super(plaque, model, color, client);
+        super(id, plaque, model, color, entryHour, client);
 
     }
 

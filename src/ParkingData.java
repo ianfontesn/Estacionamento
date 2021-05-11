@@ -29,10 +29,14 @@ public class ParkingData
 
     }
 
-    public void getVehicleFromList(String plaque)
+    public Vehicle getVehicleFromList(String plaque)
     {
-        listOfVehicles.get(plaque);
+        return listOfVehicles.get(plaque);
+    }
 
+    public void removeVehicleFromList(String plaque)
+    {
+        listOfVehicles.remove(plaque);
     }
 
 

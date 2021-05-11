@@ -21,6 +21,7 @@ public class ParkInterface extends JFrame implements ActionListener
     private int IdVehicle = 1;
     private final javax.swing.JLabel lblDate = new JLabel();
     private final javax.swing.JLabel lblHour = new JLabel();
+    private Date dateNow;
 
     // End of variables declaration
 
@@ -244,11 +245,7 @@ public class ParkInterface extends JFrame implements ActionListener
         jLabel1.setText("ID:");
 
         IDtf.setText("");
-        IDtf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-            }
-        });
+        IDtf.setEditable(false);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -311,8 +308,8 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jLabel4.setText("Plaque:");
 
-        plaqueTf.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        plaqueTf.setText("jTextField1");
+        plaqueTf.setFont(new java.awt.Font("Arial Black", 1, 24));
+        plaqueTf.setText("");
         plaqueTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -330,6 +327,12 @@ public class ParkInterface extends JFrame implements ActionListener
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
+                IDtf.setText("");
+                dateTf.setText("");
+                hourTf.setText("");
+                plaqueTf.setText("");
+                dateNow = null;
+
             }
         });
 
@@ -337,17 +340,31 @@ public class ParkInterface extends JFrame implements ActionListener
         entryButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
+                    sysControl.addVehicleOnList(plaqueTf.getText(),
+                            sysControl.createNewVehicle
+                     (
+                            IDtf.getText(),
+                            plaqueTf.getText().replaceAll(" ", ""),
+                            typeChoice.getSelectedItem(),
+                            modelChoice.getSelectedItem(),
+                            colorChoice.getSelectedItem(),
+                            dateNow,
+                            null
+                    ));
             }
         });
 
-        setTimeButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        setTimeButton.setFont(new java.awt.Font("Tahoma", 1, 11));
         setTimeButton.setText("Set Time");
         setTimeButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setTimeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
+                IDtf.setText(sysControl.setANewVehicleId());
                 dateTf.setText(sysControl.dateNow());
                 hourTf.setText(sysControl.hourNow());
+                dateNow = sysControl.getDateNow();
+
 
             }
         });
@@ -565,19 +582,7 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jLabel3.setText("Name:");
 
-        nameTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-
-            }
-        });
-
         jLabel4.setText("ID:");
-
-        idTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-            }
-        });
 
         jLabel5.setText("Gender:");
 
@@ -729,7 +734,7 @@ public class ParkInterface extends JFrame implements ActionListener
         JLabel jLabel2 = new javax.swing.JLabel();
         JTextField plaqueExitVehicleTf = new javax.swing.JTextField();
         JLabel jLabel3 = new JLabel();
-        JTextField ValueToPayExitVehicleTf = new javax.swing.JTextField();
+        JTextField valueToPayExitVehicleTf = new javax.swing.JTextField();
         JLabel jLabel4 = new JLabel();
         JTextField infoExitVehicleTf = new JTextField();
         JButton finishExitVehicleButton = new JButton();
@@ -749,7 +754,7 @@ public class ParkInterface extends JFrame implements ActionListener
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ian\\Desktop\\ProjetoTp2 - Estacionamento\\Icons\\newCarIcon.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png")); // NOI18N
         jLabel1.setText("EXIT A CAR");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -774,15 +779,15 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jLabel2.setText("Plaque:");
 
-        plaqueExitVehicleTf.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        plaqueExitVehicleTf.setText("jTextField1");
+        plaqueExitVehicleTf.setFont(new java.awt.Font("Arial Black", 0, 24));
+        plaqueExitVehicleTf.setText("");
 
         jLabel3.setText("Value:");
 
-        ValueToPayExitVehicleTf.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        ValueToPayExitVehicleTf.setForeground(new java.awt.Color(0, 153, 51));
-        ValueToPayExitVehicleTf.setText("jTextField2");
-        ValueToPayExitVehicleTf.addActionListener(new java.awt.event.ActionListener() {
+        valueToPayExitVehicleTf.setFont(new java.awt.Font("Arial", 1, 24));
+        valueToPayExitVehicleTf.setForeground(new java.awt.Color(0, 153, 51));
+        valueToPayExitVehicleTf.setText("");
+        valueToPayExitVehicleTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             }
@@ -790,16 +795,25 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jLabel4.setText("Info:");
 
-        infoExitVehicleTf.setText("jTextField3");
+        infoExitVehicleTf.setText("");
 
         finishExitVehicleButton.setText("Finish");
         finishExitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
+                 valueToPayExitVehicleTf.setText(sysControl.exitACar(plaqueExitVehicleTf.getText()));
+
             }
         });
 
         cancelExitVehicleButton.setText("Cancel");
+        cancelExitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                exitCarFrame.dispose();
+
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -821,7 +835,7 @@ public class ParkInterface extends JFrame implements ActionListener
                                                 .addGap(0, 31, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ValueToPayExitVehicleTf, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(valueToPayExitVehicleTf, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addComponent(finishExitVehicleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(37, 37, 37)
@@ -835,7 +849,7 @@ public class ParkInterface extends JFrame implements ActionListener
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(ValueToPayExitVehicleTf, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(valueToPayExitVehicleTf, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(jLabel3))
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
