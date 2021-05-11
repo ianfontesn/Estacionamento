@@ -5,7 +5,8 @@ public class Main
         /**
          * This Class make a instance of the System.
          */
-        System system = new System();
+        ParkInterface systemInterface = new ParkInterface();
+
 
     }
 
