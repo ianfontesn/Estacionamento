@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -17,25 +18,22 @@ public class ParkInterface extends JFrame implements ActionListener
      */
 
     private SysControl sysControl = new SysControl();
-    private int IdClient = 1;
-    private int IdVehicle = 1;
     private final javax.swing.JLabel lblDate = new JLabel();
     private final javax.swing.JLabel lblHour = new JLabel();
     private Date dateNow;
+    private Boolean canRemoveAClient = false;
 
     // End of variables declaration
 
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
 
     }
 
-
+    //the constructor
     public ParkInterface()
     {
-
         //MAKE THE REAL TIME LABEL
         Thread th = new Thread(new Runnable()
         { //cria uma thread
@@ -78,10 +76,10 @@ public class ParkInterface extends JFrame implements ActionListener
         JLabel logoLabel1 = new JLabel();
         JSeparator lineUnderLogo1 = new JSeparator();
         JPanel jPanel3 = new JPanel();
-        JButton entryVehicleButton1 = new JButton();
+        JButton exitVehicleButton = new JButton();
         JButton newClientButton1 = new JButton();
-        JButton removeClientButton1 = new JButton();
-        JButton findClientButton1 = new JButton();
+        JButton removeClientButton = new JButton();
+        JButton findClientButton = new JButton();
         JButton reportsButton1 = new JButton();
         JSeparator jSeparator1 = new JSeparator();
         JPanel jPanel2 = new JPanel();
@@ -151,10 +149,10 @@ public class ParkInterface extends JFrame implements ActionListener
 
         lineUnderLogo1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        entryVehicleButton1.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png"));
-        entryVehicleButton1.setText("Exit Vehicle");
-        entryVehicleButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        entryVehicleButton1.addActionListener(new java.awt.event.ActionListener() {
+        exitVehicleButton.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png"));
+        exitVehicleButton.setText("Exit Vehicle");
+        exitVehicleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        exitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitVehicleWindow();
             }
@@ -164,18 +162,37 @@ public class ParkInterface extends JFrame implements ActionListener
         newClientButton1.setText("New Client");
         newClientButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         newClientButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 newClientWindow();
             }
         });
 
-        removeClientButton1.setIcon(new javax.swing.ImageIcon("Icons/removeClientIcon.png"));
-        removeClientButton1.setText("Remove Client");
-        removeClientButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeClientButton.setIcon(new javax.swing.ImageIcon("Icons/removeClientIcon.png"));
+        removeClientButton.setText("Remove Client");
+        removeClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeClientButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                removeClientWindow();
+            }
+        });
 
-        findClientButton1.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png"));
-        findClientButton1.setText("Find Client");
-        findClientButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+
+        findClientButton.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png"));
+        findClientButton.setText("Find Client");
+        findClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        findClientButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                findClientWindow();
+            }
+        });
 
         reportsButton1.setIcon(new javax.swing.ImageIcon("Icons/reports.png"));
         reportsButton1.setText("Reports");
@@ -188,10 +205,10 @@ public class ParkInterface extends JFrame implements ActionListener
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(findClientButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(removeClientButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(findClientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(removeClientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(newClientButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(entryVehicleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(exitVehicleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(reportsButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -199,13 +216,13 @@ public class ParkInterface extends JFrame implements ActionListener
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(entryVehicleButton1)
+                                .addComponent(exitVehicleButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(newClientButton1)
                                 .addGap(18, 18, 18)
-                                .addComponent(removeClientButton1)
+                                .addComponent(removeClientButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(findClientButton1)
+                                .addComponent(findClientButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(reportsButton1)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -340,17 +357,32 @@ public class ParkInterface extends JFrame implements ActionListener
         entryButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-                    sysControl.addVehicleOnList(plaqueTf.getText(),
-                            sysControl.createNewVehicle
-                     (
-                            IDtf.getText(),
-                            plaqueTf.getText().replaceAll(" ", ""),
-                            typeChoice.getSelectedItem(),
-                            modelChoice.getSelectedItem(),
-                            colorChoice.getSelectedItem(),
-                            dateNow,
-                            null
-                    ));
+                Vehicle vehicle = sysControl.createNewVehicle
+                        (
+                                IDtf.getText(),
+                                plaqueTf.getText().toLowerCase().replaceAll(" ", ""),
+                                typeChoice.getSelectedItem(),
+                                modelChoice.getSelectedItem(),
+                                colorChoice.getSelectedItem(),
+                                dateNow,
+                                null
+                        );
+
+                // if have a error with the information sent to the constructor
+                if(vehicle == null)
+                {
+                    JOptionPane.showMessageDialog(null, sysControl.getErrorString());
+                }
+                else
+                {
+                    sysControl.addVehicleOnList(plaqueTf.getText().toLowerCase().replaceAll(" ", ""), vehicle);
+                    JOptionPane.showMessageDialog(null, "Car parked successfully.");
+                    IDtf.setText("");
+                    dateTf.setText("");
+                    hourTf.setText("");
+                    plaqueTf.setText("");
+
+                }
             }
         });
 
@@ -364,8 +396,6 @@ public class ParkInterface extends JFrame implements ActionListener
                 dateTf.setText(sysControl.dateNow());
                 hourTf.setText(sysControl.hourNow());
                 dateNow = sysControl.getDateNow();
-
-
             }
         });
 
@@ -533,10 +563,10 @@ public class ParkInterface extends JFrame implements ActionListener
         JTextField nameTf = new JTextField();
         JLabel jLabel4 = new JLabel();
         JTextField idTf = new JTextField();
-        Choice choice1 = new Choice();
+        Choice choiceGender = new Choice();
         JLabel jLabel5 = new JLabel();
         JLabel jLabel6 = new JLabel();
-        JTextField cpfTf = new JTextField();
+        JTextField cpfTf = new JTextField(11);
         JLabel jLabel7 = new JLabel();
         JTextField contactTf = new JTextField();
         JLabel jLabel8 = new JLabel();
@@ -545,6 +575,38 @@ public class ParkInterface extends JFrame implements ActionListener
         JButton cancelClientButton = new JButton();
 
 
+        cpfTf.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+               String chars = "0123456789";
+               if(!chars.contains(e.getKeyChar()+"") || cpfTf.getText().length() > 10)
+               {
+                   e.consume();
+               }
+            }
+        });
+
+        contactTf.setText("99999999999");
+        contactTf.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                String chars = "0123456789";
+                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                {
+                    e.consume();
+                }
+            }
+        });
+
+        idTf.setText(sysControl.setANewClientId());
+        idTf.setEditable(false);
+
+        choiceGender.add("MALE");
+        choiceGender.add("FEMALE");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -552,9 +614,9 @@ public class ParkInterface extends JFrame implements ActionListener
 
         newClientTopPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ian\\Desktop\\ProjetoTp2 - Estacionamento\\Icons\\newClientIcon.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/newClientIcon.png"));
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24));
         jLabel2.setText("ENTER A NEW CLIENT");
 
         javax.swing.GroupLayout newClientTopPanelLayout = new javax.swing.GroupLayout(newClientTopPanel);
@@ -588,23 +650,46 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jLabel6.setText("CPF:");
 
-        cpfTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-            }
-        });
-
         jLabel7.setText("Contact:");
 
         jLabel8.setText("E-mail:");
 
         saveClientButton.setText("Save");
         saveClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        saveClientButton.addActionListener(new java.awt.event.ActionListener()
+                                           {
+                                               public void actionPerformed(java.awt.event.ActionEvent evt)
+                                               {
+
+                                                   Client client = sysControl.createNewClient(
+                                                           sysControl.getClientId(),
+                                                           nameTf.getText(),
+                                                           choiceGender.getSelectedItem(),
+                                                           cpfTf.getText(),
+                                                           contactTf.getText(),
+                                                           emailTf.getText()
+                                                   );
+
+                                                   if (client == null)
+                                                   {
+                                                       JOptionPane.showMessageDialog(null, sysControl.getErrorString());
+                                                   }
+                                                   else
+                                                   {
+                                                       sysControl.addClientOnList(client);
+                                                       JOptionPane.showMessageDialog(null, "Client added");
+                                                       newClientFrame.dispose();
+                                                       newClientWindow();
+                                                   }
+                                               }
+                                           });
 
         cancelClientButton.setText("Cancel");
         cancelClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cancelClientButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                newClientFrame.dispose();
 
             }
         });
@@ -652,7 +737,7 @@ public class ParkInterface extends JFrame implements ActionListener
                                                                 .addGap(18, 18, 18)
                                                                 .addComponent(jLabel5)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(choiceGender, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(48, 48, 48))))))
         );
         dataPanelLayout.setVerticalGroup(
@@ -660,7 +745,7 @@ public class ParkInterface extends JFrame implements ActionListener
                         .addGroup(dataPanelLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(choiceGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(nameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -717,8 +802,6 @@ public class ParkInterface extends JFrame implements ActionListener
         newClientFrame.setResizable(false);
         newClientFrame.setVisible(true);
 
-
-
     }
 
     public void exitVehicleWindow()
@@ -753,8 +836,8 @@ public class ParkInterface extends JFrame implements ActionListener
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png")); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24));
+        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png"));
         jLabel1.setText("EXIT A CAR");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -796,13 +879,24 @@ public class ParkInterface extends JFrame implements ActionListener
         jLabel4.setText("Info:");
 
         infoExitVehicleTf.setText("");
+        infoExitVehicleTf.setEditable(false);
 
         finishExitVehicleButton.setText("Finish");
         finishExitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-                 valueToPayExitVehicleTf.setText(sysControl.exitACar(plaqueExitVehicleTf.getText()));
-
+                //return a string with the value of park use
+                String value = sysControl.exitACar(plaqueExitVehicleTf.getText().toLowerCase()
+                        .replaceAll(" ", ""));
+                if(value == null)
+                {
+                    infoExitVehicleTf.setText(sysControl.getErrorString());
+                }
+                else
+                {
+                    valueToPayExitVehicleTf.setText(value);
+                    infoExitVehicleTf.setText("Vehicle removed.");
+                }
             }
         });
 
@@ -902,12 +996,453 @@ public class ParkInterface extends JFrame implements ActionListener
         exitCarFrame.pack();
         exitCarFrame.setVisible(true);
 
+    }
+
+    public void findClientWindow()
+    {
+
+        JFrame findClientFrame = new JFrame("Find a Client - PARK SYSTEM v0.1");
+
+        JPanel principalPanel = new JPanel();
+        JPanel jPanel2 = new JPanel();
+        JPanel jPanel3 = new JPanel();
+        JLabel jLabel1 = new JLabel();
+        JPanel contentPanel = new JPanel();
+        JLabel jLabel2 = new JLabel();
+        JTextField nameTf = new JTextField();
+        JLabel jLabel3 = new JLabel();
+        JTextField cpfTf = new JTextField();
+        JLabel jLabel4 = new JLabel();
+        JTextField contactTf = new JTextField();
+        JScrollPane jScrollPane1 = new JScrollPane();
+        JTextArea findClientTa = new JTextArea();
+        JButton findButton = new JButton();
+        JButton cancelButton = new JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png")); // NOI18N
+        jLabel1.setText("FIND A CLIENT");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        contentPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        jLabel2.setText("Name: ");
+
+        jLabel3.setText("CPF:");
+        cpfTf.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                String chars = "0123456789";
+                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                {
+                    e.consume();
+                }
+            }
+        });
+
+        jLabel4.setText("Contact:");
+        contactTf.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                String chars = "0123456789";
+                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                {
+                    e.consume();
+                }
+            }
+        });
+
+        findClientTa.setColumns(20);
+        findClientTa.setRows(5);
+        jScrollPane1.setViewportView(findClientTa);
+
+        findButton.setText("Find");
+        findButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        findButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                    String clientFound = sysControl.findClient(
+                            nameTf.getText().toLowerCase(),
+                            cpfTf.getText(),
+                            contactTf.getText()
+                    );
+
+                    if(clientFound == null)
+                    {
+                        findClientTa.setText(sysControl.getErrorString());
+                    }
+                    else
+                    {
+                        findClientTa.setText(clientFound);
+                        findClientTa.setEditable(false);
+                    }
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                findClientFrame.dispose();
+
+            }
+        });
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+                contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                                .addComponent(jLabel2)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(nameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                                .addComponent(jLabel3)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(cpfTf))
+                                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                                .addComponent(jLabel4)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(contactTf))))
+                                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                                .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        contentPanelLayout.setVerticalGroup(
+                contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(contentPanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(nameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(cpfTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(contactTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(findButton)
+                                        .addComponent(cancelButton))
+                                .addGap(19, 19, 19))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout principalPanelLayout = new javax.swing.GroupLayout(principalPanel);
+        principalPanel.setLayout(principalPanelLayout);
+        principalPanelLayout.setHorizontalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 11, Short.MAX_VALUE))))
+        );
+        principalPanelLayout.setVerticalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        findClientFrame.add(principalPanel);
+        findClientFrame.pack();
+        findClientFrame.setResizable(false);
+        findClientFrame.setVisible(true);
+    }
+
+    public void removeClientWindow()
+    {
+
+        JFrame removeAClientFrame = new JFrame("Remove a client - PARK SYSTEM v0.1");
+
+        JPanel principalPanel = new JPanel();
+        JPanel jPanel2 = new JPanel();
+        JPanel topPanel = new JPanel();
+        JLabel removeAClientLabel = new JLabel();
+        JPanel jPanel1 = new JPanel();
+        JLabel jLabel1 = new JLabel();
+        JTextField cpfTf = new JTextField(11);
+        JButton removeClientButton = new JButton();
+        JButton cancelButton = new JButton();
+        JScrollPane jScrollPane2 = new JScrollPane();
+        JTextArea infoTa = new javax.swing.JTextArea();
+        JButton findButton = new JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        topPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        removeAClientLabel.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        removeAClientLabel.setIcon(new javax.swing.ImageIcon("Icons/removeClientIcon.png")); // NOI18N
+        removeAClientLabel.setText("REMOVE A CLIENT");
+
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(topPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(removeAClientLabel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        topPanelLayout.setVerticalGroup(
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(topPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(removeAClientLabel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        jLabel1.setText("CPF:");
+
+        // CPF TEXT FIELD TREATMENT
+        cpfTf.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                String chars = "0123456789";
+                if(!chars.contains(e.getKeyChar()+"") || cpfTf.getText().length() > 10)
+                {
+                    e.consume();
+                }
+            }
+        });
+
+        removeClientButton.setText("Remove");
+        removeClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeClientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                if(canRemoveAClient)
+                {
+                    Boolean removed = sysControl.removeClient(cpfTf.getText());
+                    if (removed)
+                    {
+                        JOptionPane.showMessageDialog(null, "Client successfully removed. ");
+                        canRemoveAClient = false;
+                    }
+                    else
+                    {
+                        canRemoveAClient = false;
+                        infoTa.setText("Client cannot be removed. Try to find again.");
+
+                    }
+                }
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.setToolTipText("");
+        cancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                removeAClientFrame.dispose();
+
+            }
+        });
+
+        infoTa.setEditable(false);
+        infoTa.setColumns(20);
+        infoTa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        infoTa.setRows(5);
+        jScrollPane2.setViewportView(infoTa);
+
+        findButton.setText("Find");
+        findButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                String client = sysControl.findClient("", cpfTf.getText(), "");
+
+                if(client == null)
+                {
+                       infoTa.setText(sysControl.getErrorString());
+                }
+                else
+                {
+                    infoTa.setText(client);
+                    canRemoveAClient = true;
+                }
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jScrollPane2)
+                                                .addContainerGap())
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(cpfTf)
+                                                .addContainerGap())
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(removeClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(32, 32, 32))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(findButton)
+                                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cpfTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(findButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(removeClientButton)
+                                        .addComponent(cancelButton))
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout principalPanelLayout = new javax.swing.GroupLayout(principalPanel);
+        principalPanel.setLayout(principalPanelLayout);
+        principalPanelLayout.setHorizontalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, principalPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())
+        );
+        principalPanelLayout.setVerticalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+
+        removeAClientFrame.add(principalPanel);
+        removeAClientFrame.pack();
+        removeAClientFrame.setResizable(false);
+        removeAClientFrame.setVisible(true);
 
 
 
     }
-
-
 
 
     //create a menuBar to use in all frames.
@@ -917,9 +1452,6 @@ public class ParkInterface extends JFrame implements ActionListener
         //vehicles menu
         JMenu vehiclesMenu = new JMenu("Vehicle");
         menuBar.add(vehiclesMenu);
-
-        JMenuItem enterVehicle = new JMenuItem("Enter Vehicle");
-        vehiclesMenu.add(enterVehicle);
 
         JMenuItem exitVehicle = new JMenuItem("Exit Vehicle");
         vehiclesMenu.add(exitVehicle);
@@ -935,16 +1467,33 @@ public class ParkInterface extends JFrame implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                newClientWindow();
             }
         });
 
         clientMenu.add(newClient);
 
-
         JMenuItem removeClient = new JMenuItem("Remove Client");
+        removeClient.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                removeClientWindow();
+            }
+        });
         clientMenu.add(removeClient);
 
+        JMenuItem findClient = new JMenuItem("Find Client");
+        findClient.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                findClientWindow();
+            }
+        });
+        clientMenu.add(findClient);
 
         //Reports menu
         JMenu reportsMenu = new JMenu("Reports");

@@ -7,12 +7,12 @@ public class Client
      * just add a new Field to the Client.
      */
 
-    private Integer id;
+    private String id;
     private String name;
+    private String gender;
     private String cpf;
     private String contact;
     private String email;
-    private Boolean isMonthly;
 
 
     /**
@@ -23,23 +23,23 @@ public class Client
      * @param contact a phone number
      * @param email a email of the client
      */
-    public Client(Integer id, String name, String cpf, String contact, String email)
+    public Client(String id, String name, String gender, String cpf, String contact, String email)
     {
        this.id = id;
        this.name = name;
        this.cpf = cpf;
        this.contact = contact;
        this.email = email;
-       isMonthly = false;
+       this.gender = gender;
     }
 
 
-    public Integer getId()
+    public String getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(String id)
     {
         this.id = id;
     }

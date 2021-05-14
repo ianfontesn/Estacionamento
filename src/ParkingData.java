@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ParkingData
 {
@@ -10,15 +11,18 @@ public class ParkingData
      * and/or no vacancy
      */
 
-    private HashMap<String, Vehicle> listOfVehicles;
-    private ArrayList<Client> listOfClient;
+    private HashMap <String, Vehicle> listOfVehicles;
+    private ArrayList <Client> listOfClient;
     private Boolean haveVacancy;
 
 
     public ParkingData()
     {
+        //represents the vehicles parked in the park
         listOfVehicles = new HashMap <>();
+        //represent a collection of all clients with registry in the systemm
         listOfClient = new ArrayList <>();
+        // will be used to verify the vacancy
         haveVacancy = true;
     }
 
@@ -27,6 +31,11 @@ public class ParkingData
     {
         listOfVehicles.put(plaque, vehicle);
 
+    }
+
+    public void setClientOnList(Client client)
+    {
+        listOfClient.add(client);
     }
 
     public Vehicle getVehicleFromList(String plaque)
@@ -39,5 +48,34 @@ public class ParkingData
         listOfVehicles.remove(plaque);
     }
 
+
+    public List <Client> getClientFromList(String name, String cpf, String contact)
+    {
+        List <Client> clientReturn = new ArrayList <>();
+
+        for (Client client : listOfClient)
+        {
+            if ((!client.getName().isEmpty() && client.getName().contains(name)) || client.getCpf().equals(cpf) || client.getContact().equals(contact))
+            {
+                clientReturn.add(client);
+            }
+        }
+        return clientReturn;
+
+    }
+
+    public Boolean removeAClientFromList(String cpf)
+    {
+        Boolean deleted = false;
+        for(Client client : listOfClient)
+        {
+            if(client.getCpf().equals(cpf))
+            {
+                listOfClient.remove(client);
+                deleted = true;
+            }
+        }
+            return deleted;
+    }
 
 }

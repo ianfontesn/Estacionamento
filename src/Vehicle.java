@@ -8,9 +8,11 @@ public class Vehicle
      private Date entryHour;
      private Client client;
      private String id;
+     private String type;
 
 
-     public Vehicle(String id, String plaque, String model, String color, Date entryHour, Client client)
+
+    public Vehicle(String id, String plaque, String model, String color, Date entryHour, Client client, String type)
      {
          this.id = id;
         this.plaque = plaque;
@@ -18,7 +20,19 @@ public class Vehicle
         this.color = color;
         this.client = client;
         this.entryHour = entryHour;
+        this.type = type;
      }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
 
     public String getId()
     {
