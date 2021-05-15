@@ -16,7 +16,7 @@ public class ParkInterface extends JFrame implements ActionListener
      * All functions is on the System Class.
      */
 
-    private static final String VERSION = "0.1";
+    private static final String VERSION = "0.9";
 
     private SysControl sysControl = new SysControl();
     private final javax.swing.JLabel lblDate = new JLabel();

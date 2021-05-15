@@ -75,7 +75,7 @@ public class ParkingData
 
         for (Client client : listOfClient)
         {
-            if ((!client.getName().isEmpty() && client.getName().contains(name)) || client.getCpf().equals(cpf) || client.getContact().equals(contact))
+            if ((!name.isEmpty() && client.getName().contains(name)) || client.getCpf().equals(cpf) || client.getContact().equals(contact))
             {
                 clientReturn.add(client);
             }

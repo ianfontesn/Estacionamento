@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class Client
 {
     /**
@@ -46,7 +48,7 @@ public class Client
 
     public String getName()
     {
-        return name;
+        return name.toLowerCase();
     }
 
     public void setName(String name)
@@ -76,7 +78,7 @@ public class Client
 
     public String getEmail()
     {
-        return email;
+        return email.toLowerCase();
     }
 
     public void setEmail(String email)
