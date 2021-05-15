@@ -1,20 +1,20 @@
 import java.util.Date;
 
-public class Vehicle
+public abstract class Vehicle
 {
-    private String plaque;
-     private String model;
-     private String color;
-     private Date entryHour;
-     private Client client;
-     private String id;
-     private String type;
+     protected String plaque;
+     protected String model;
+     protected String color;
+     protected Date entryHour;
+     protected Client client;
+     protected String id;
+     protected String type;
 
 
 
     public Vehicle(String id, String plaque, String model, String color, Date entryHour, Client client, String type)
      {
-         this.id = id;
+        this.id = id;
         this.plaque = plaque;
         this.model = model;
         this.color = color;

@@ -1,24 +1,19 @@
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class SysControl
 {
-
     /**
      * This class is responsible for
      * containing the main loop of the system, where the
      * objects that represent all the entities of the
      * system will be instantiated.
      */
-
-
     private ParkingData parkingData;
     private Prices prices;
-    private Report report;
     private CpfTester cpfTester;
     private Integer idVehicle = 0;
     private Integer idClient = 0;
@@ -32,11 +27,8 @@ public class SysControl
         parkingData = new ParkingData();
         //start the list of price
         prices = new Prices();
-        //start a daily report
-        report = new Report();
         //start a cpf tester
         cpfTester = new CpfTester();
-
     }
 
     public String setANewClientId()
@@ -50,7 +42,6 @@ public class SysControl
     {
         return idClient.toString();
     }
-
 
     public String setANewVehicleId()
     {
@@ -83,7 +74,6 @@ public class SysControl
         return hourNow;
     }
 
-
     public Client createNewClient(String id, String name, String gender, String cpf, String contact, String email)
     {
 
@@ -108,7 +98,6 @@ public class SysControl
 
         return client;
     }
-
 
     public Vehicle createNewVehicle(String id, String plaque, String type, String model, String color, Date entryHour, Client client)
     {
@@ -171,12 +160,19 @@ public class SysControl
             Integer time = (int) ((timeToPay / 60000)); //Make the time millis to minutes
 
             Double value = time * prices.getPrice(vehicle.getType());
-            parkingData.removeVehicleFromList(plaque);
+            //update the total of cash here
+            parkingData.updateTotalCashFlow(value);
 
             DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
             decimalFormat.format(value);
 
-            return "R$" + decimalFormat.format(value);
+            String valor =  decimalFormat.format(value);
+            //make a new report here
+            makeAReport(vehicle, valor, getDateNow());
+
+            parkingData.removeVehicleFromList(plaque);
+
+            return "R$" + valor;
 
         }
         catch (NullPointerException vehicleNull)
@@ -186,9 +182,8 @@ public class SysControl
         }
     }
 
-
- public String findClient(String name, String cpf, String contact)
- {
+    public String findClient(String name, String cpf, String contact)
+    {
      try
      {
          //return a list of clients found
@@ -218,11 +213,80 @@ public class SysControl
 
     public Boolean removeClient(String cpf)
     {
-        Boolean deleted = parkingData.removeAClientFromList(cpf);
-        return deleted;
+        //If client deleted, return true, else, return false
+        return parkingData.removeAClientFromList(cpf);
     }
 
+    public void makeAReport(Vehicle vehicle, String value, Date dateNow)
+    {
+        //make a report of the type MOVEMENT
+        // IS A COMPLETE REPORT
+        Report reportType1 = new Report
+                        (1,
+                        vehicle.getId(),
+                        vehicle.getPlaque(),
+                        vehicle.getEntryHour(),
+                        dateNow,
+                        vehicle.getModel(),
+                        vehicle.getColor(),
+                        vehicle.getType(),
+                        value
+                        );
 
+        //make a report with the cash information
+        //
+        Report reportType0 = new Report
+                (0,
+                        vehicle.getId(),
+                        vehicle.getPlaque(),
+                        vehicle.getEntryHour(),
+                        dateNow,
+                        vehicle.getModel(),
+                        vehicle.getColor(),
+                        vehicle.getType(),
+                        value
+                );
+
+        parkingData.addReportInList(reportType1, reportType0);
+
+    }
+
+    public String returnAReportList(int type)
+    {
+        String returnString = "";
+
+            if(type == 1)
+            {
+                returnString += "=======DAILY MOVEMENT REPORT ========================\n";
+            }
+            else
+            {
+                returnString += "=======CASHFLOW REPORT ===============================\n";
+            }
+
+            List<Report> reportList = parkingData.getAListOfReport(type);
+
+            for(Report report : reportList)
+            {
+                returnString += report.getReportString();
+            }
+
+            return returnString;
+    }
+
+    public String getTotalCashValue()
+    {
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        String returnString = decimalFormat.format(parkingData.getTotalCashFlow());
+
+        return returnString;
+    }
+
+    public String getAboutUsString()
+    {
+        String aboutUs = " - Park System \n - Created by: IAN FONTES / AKYNATAN \n - Version v";
+        return aboutUs;
+    }
 
     public String getErrorString()
     {

@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -17,17 +16,17 @@ public class ParkInterface extends JFrame implements ActionListener
      * All functions is on the System Class.
      */
 
+    private static final String VERSION = "0.1";
+
     private SysControl sysControl = new SysControl();
     private final javax.swing.JLabel lblDate = new JLabel();
     private final javax.swing.JLabel lblHour = new JLabel();
     private Date dateNow;
     private Boolean canRemoveAClient = false;
 
-    // End of variables declaration
-
-
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
 
     }
 
@@ -36,11 +35,11 @@ public class ParkInterface extends JFrame implements ActionListener
     {
         //MAKE THE REAL TIME LABEL
         Thread th = new Thread(new Runnable()
-        { //cria uma thread
+        {
             public void run()
             {
                 while (true)
-                { //roda indefinidamente
+                {
                     Date data = Calendar.getInstance().getTime();
                     DateFormat d = DateFormat.getDateInstance();
                     DateFormat h = DateFormat.getTimeInstance();
@@ -48,7 +47,7 @@ public class ParkInterface extends JFrame implements ActionListener
                     lblHour.setText(h.format(data));
                     try
                     {
-                        Thread.sleep(1000); //espera 1 segundo para fazer a nova evolução
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex)
                     {
                     }
@@ -62,11 +61,11 @@ public class ParkInterface extends JFrame implements ActionListener
 
     public void runInterface()
     {
-        JFrame principalFrame = new JFrame("Park System v0.1");
+        JFrame principalFrame = new JFrame("Park System v" + VERSION);
         principalFrame.setJMenuBar(makeMenuBar());
         principalFrame.setResizable(false);
 
-//MAKE THE PANEL
+        //MAKE THE PANEL
 
         JPanel principalPanel = new JPanel();
         principalPanel.setBorder(new EmptyBorder(0, 0, 10, 10));
@@ -80,7 +79,7 @@ public class ParkInterface extends JFrame implements ActionListener
         JButton newClientButton1 = new JButton();
         JButton removeClientButton = new JButton();
         JButton findClientButton = new JButton();
-        JButton reportsButton1 = new JButton();
+        JButton reportButton = new JButton();
         JSeparator jSeparator1 = new JSeparator();
         JPanel jPanel2 = new JPanel();
         JSeparator jSeparator2 = new JSeparator();
@@ -138,7 +137,6 @@ public class ParkInterface extends JFrame implements ActionListener
         //END VARIABLE DECLARATION
 
 
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         logoPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -152,16 +150,19 @@ public class ParkInterface extends JFrame implements ActionListener
         exitVehicleButton.setIcon(new javax.swing.ImageIcon("Icons/newCarIcon.png"));
         exitVehicleButton.setText("Exit Vehicle");
         exitVehicleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        exitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitVehicleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 exitVehicleWindow();
             }
         });
 
-        newClientButton1.setIcon(new javax.swing.ImageIcon("Icons/newClientIcon.png")); // NOI18N
+        newClientButton1.setIcon(new javax.swing.ImageIcon("Icons/newClientIcon.png"));
         newClientButton1.setText("New Client");
         newClientButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        newClientButton1.addActionListener(new java.awt.event.ActionListener() {
+        newClientButton1.addActionListener(new java.awt.event.ActionListener()
+        {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 newClientWindow();
@@ -181,7 +182,6 @@ public class ParkInterface extends JFrame implements ActionListener
         });
 
 
-
         findClientButton.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png"));
         findClientButton.setText("Find Client");
         findClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -194,9 +194,17 @@ public class ParkInterface extends JFrame implements ActionListener
             }
         });
 
-        reportsButton1.setIcon(new javax.swing.ImageIcon("Icons/reports.png"));
-        reportsButton1.setText("Reports");
-        reportsButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reportButton.setIcon(new javax.swing.ImageIcon("Icons/reports.png"));
+        reportButton.setText("Reports");
+        reportButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reportButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                reportWindow();
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -209,7 +217,7 @@ public class ParkInterface extends JFrame implements ActionListener
                                         .addComponent(removeClientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(newClientButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(exitVehicleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(reportsButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -224,7 +232,7 @@ public class ParkInterface extends JFrame implements ActionListener
                                 .addGap(18, 18, 18)
                                 .addComponent(findClientButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(reportsButton1)
+                                .addComponent(reportButton)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -254,7 +262,7 @@ public class ParkInterface extends JFrame implements ActionListener
 
         CenterPainel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        entryVehicleLabel.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        entryVehicleLabel.setFont(new java.awt.Font("Arial Black", 0, 24));
         entryVehicleLabel.setText("ENTRY VEHICLE");
 
         idDateHourPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -327,8 +335,10 @@ public class ParkInterface extends JFrame implements ActionListener
 
         plaqueTf.setFont(new java.awt.Font("Arial Black", 1, 24));
         plaqueTf.setText("");
-        plaqueTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        plaqueTf.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
             }
         });
@@ -341,8 +351,10 @@ public class ParkInterface extends JFrame implements ActionListener
 
         resetButton.setActionCommand("Reset");
         resetButton.setLabel("Reset");
-        resetButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        resetButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 IDtf.setText("");
                 dateTf.setText("");
@@ -354,8 +366,10 @@ public class ParkInterface extends JFrame implements ActionListener
         });
 
         entryButton1.setLabel("Entry");
-        entryButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        entryButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 Vehicle vehicle = sysControl.createNewVehicle
                         (
@@ -369,7 +383,7 @@ public class ParkInterface extends JFrame implements ActionListener
                         );
 
                 // if have a error with the information sent to the constructor
-                if(vehicle == null)
+                if (vehicle == null)
                 {
                     JOptionPane.showMessageDialog(null, sysControl.getErrorString());
                 }
@@ -389,7 +403,8 @@ public class ParkInterface extends JFrame implements ActionListener
         setTimeButton.setFont(new java.awt.Font("Tahoma", 1, 11));
         setTimeButton.setText("Set Time");
         setTimeButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setTimeButton.addActionListener(new java.awt.event.ActionListener() {
+        setTimeButton.addActionListener(new java.awt.event.ActionListener()
+        {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
                 IDtf.setText(sysControl.setANewVehicleId());
@@ -552,7 +567,7 @@ public class ParkInterface extends JFrame implements ActionListener
 
     public void newClientWindow()
     {
-        JFrame newClientFrame = new JFrame("Entry a new client - PARK SYSTEM v0.1");
+        JFrame newClientFrame = new JFrame("Entry a new client - PARK SYSTEM v" + VERSION);
 
         JPanel principalPanel = new javax.swing.JPanel();
         JPanel newClientTopPanel = new javax.swing.JPanel();
@@ -580,11 +595,11 @@ public class ParkInterface extends JFrame implements ActionListener
             @Override
             public void keyTyped(KeyEvent e)
             {
-               String chars = "0123456789";
-               if(!chars.contains(e.getKeyChar()+"") || cpfTf.getText().length() > 10)
-               {
-                   e.consume();
-               }
+                String chars = "0123456789";
+                if (!chars.contains(e.getKeyChar() + "") || cpfTf.getText().length() > 10)
+                {
+                    e.consume();
+                }
             }
         });
 
@@ -595,7 +610,7 @@ public class ParkInterface extends JFrame implements ActionListener
             public void keyTyped(KeyEvent e)
             {
                 String chars = "0123456789";
-                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                if (!chars.contains(e.getKeyChar() + "") || contactTf.getText().length() > 10)
                 {
                     e.consume();
                 }
@@ -657,37 +672,37 @@ public class ParkInterface extends JFrame implements ActionListener
         saveClientButton.setText("Save");
         saveClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveClientButton.addActionListener(new java.awt.event.ActionListener()
-                                           {
-                                               public void actionPerformed(java.awt.event.ActionEvent evt)
-                                               {
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                Client client = sysControl.createNewClient(
+                        sysControl.getClientId(),
+                        nameTf.getText(),
+                        choiceGender.getSelectedItem(),
+                        cpfTf.getText(),
+                        contactTf.getText(),
+                        emailTf.getText()
+                );
 
-                                                   Client client = sysControl.createNewClient(
-                                                           sysControl.getClientId(),
-                                                           nameTf.getText(),
-                                                           choiceGender.getSelectedItem(),
-                                                           cpfTf.getText(),
-                                                           contactTf.getText(),
-                                                           emailTf.getText()
-                                                   );
-
-                                                   if (client == null)
-                                                   {
-                                                       JOptionPane.showMessageDialog(null, sysControl.getErrorString());
-                                                   }
-                                                   else
-                                                   {
-                                                       sysControl.addClientOnList(client);
-                                                       JOptionPane.showMessageDialog(null, "Client added");
-                                                       newClientFrame.dispose();
-                                                       newClientWindow();
-                                                   }
-                                               }
-                                           });
+                if (client == null)
+                {
+                    JOptionPane.showMessageDialog(null, sysControl.getErrorString());
+                }
+                else
+                {
+                    sysControl.addClientOnList(client);
+                    JOptionPane.showMessageDialog(null, "Client added");
+                    newClientFrame.dispose();
+                }
+            }
+        });
 
         cancelClientButton.setText("Cancel");
         cancelClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cancelClientButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelClientButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 newClientFrame.dispose();
 
@@ -806,8 +821,7 @@ public class ParkInterface extends JFrame implements ActionListener
 
     public void exitVehicleWindow()
     {
-        JFrame exitCarFrame = new JFrame("Exit a vehicle - PARK SYSTEM v0.1");
-
+        JFrame exitCarFrame = new JFrame("Exit a vehicle - PARK SYSTEM v" + VERSION);
 
         JPanel jPanel1 = new JPanel();
         JPanel principalPanel = new JPanel();
@@ -870,8 +884,10 @@ public class ParkInterface extends JFrame implements ActionListener
         valueToPayExitVehicleTf.setFont(new java.awt.Font("Arial", 1, 24));
         valueToPayExitVehicleTf.setForeground(new java.awt.Color(0, 153, 51));
         valueToPayExitVehicleTf.setText("");
-        valueToPayExitVehicleTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        valueToPayExitVehicleTf.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
             }
         });
@@ -882,13 +898,15 @@ public class ParkInterface extends JFrame implements ActionListener
         infoExitVehicleTf.setEditable(false);
 
         finishExitVehicleButton.setText("Finish");
-        finishExitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        finishExitVehicleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 //return a string with the value of park use
                 String value = sysControl.exitACar(plaqueExitVehicleTf.getText().toLowerCase()
                         .replaceAll(" ", ""));
-                if(value == null)
+                if (value == null)
                 {
                     infoExitVehicleTf.setText(sysControl.getErrorString());
                 }
@@ -901,8 +919,10 @@ public class ParkInterface extends JFrame implements ActionListener
         });
 
         cancelExitVehicleButton.setText("Cancel");
-        cancelExitVehicleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelExitVehicleButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 exitCarFrame.dispose();
 
@@ -1001,7 +1021,7 @@ public class ParkInterface extends JFrame implements ActionListener
     public void findClientWindow()
     {
 
-        JFrame findClientFrame = new JFrame("Find a Client - PARK SYSTEM v0.1");
+        JFrame findClientFrame = new JFrame("Find a Client - PARK SYSTEM v" + VERSION);
 
         JPanel principalPanel = new JPanel();
         JPanel jPanel2 = new JPanel();
@@ -1023,8 +1043,8 @@ public class ParkInterface extends JFrame implements ActionListener
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png")); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24));
+        jLabel1.setIcon(new javax.swing.ImageIcon("Icons/findClientIcon.png"));
         jLabel1.setText("FIND A CLIENT");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1071,7 +1091,7 @@ public class ParkInterface extends JFrame implements ActionListener
             public void keyTyped(KeyEvent e)
             {
                 String chars = "0123456789";
-                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                if (!chars.contains(e.getKeyChar() + "") || contactTf.getText().length() > 10)
                 {
                     e.consume();
                 }
@@ -1085,7 +1105,7 @@ public class ParkInterface extends JFrame implements ActionListener
             public void keyTyped(KeyEvent e)
             {
                 String chars = "0123456789";
-                if(!chars.contains(e.getKeyChar()+"") || contactTf.getText().length() > 10 )
+                if (!chars.contains(e.getKeyChar() + "") || contactTf.getText().length() > 10)
                 {
                     e.consume();
                 }
@@ -1098,31 +1118,35 @@ public class ParkInterface extends JFrame implements ActionListener
 
         findButton.setText("Find");
         findButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        findButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        findButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
-                    String clientFound = sysControl.findClient(
-                            nameTf.getText().toLowerCase(),
-                            cpfTf.getText(),
-                            contactTf.getText()
-                    );
+                String clientFound = sysControl.findClient(
+                        nameTf.getText().toLowerCase(),
+                        cpfTf.getText(),
+                        contactTf.getText()
+                );
 
-                    if(clientFound == null)
-                    {
-                        findClientTa.setText(sysControl.getErrorString());
-                    }
-                    else
-                    {
-                        findClientTa.setText(clientFound);
-                        findClientTa.setEditable(false);
-                    }
+                if (clientFound == null)
+                {
+                    findClientTa.setText(sysControl.getErrorString());
+                }
+                else
+                {
+                    findClientTa.setText(clientFound);
+                    findClientTa.setEditable(false);
+                }
             }
         });
 
         cancelButton.setText("Cancel");
         cancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 findClientFrame.dispose();
 
@@ -1225,7 +1249,7 @@ public class ParkInterface extends JFrame implements ActionListener
     public void removeClientWindow()
     {
 
-        JFrame removeAClientFrame = new JFrame("Remove a client - PARK SYSTEM v0.1");
+        JFrame removeAClientFrame = new JFrame("Remove a client - PARK SYSTEM v" + VERSION);
 
         JPanel principalPanel = new JPanel();
         JPanel jPanel2 = new JPanel();
@@ -1244,8 +1268,8 @@ public class ParkInterface extends JFrame implements ActionListener
 
         topPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        removeAClientLabel.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        removeAClientLabel.setIcon(new javax.swing.ImageIcon("Icons/removeClientIcon.png")); // NOI18N
+        removeAClientLabel.setFont(new java.awt.Font("Arial Black", 1, 24));
+        removeAClientLabel.setIcon(new javax.swing.ImageIcon("Icons/removeClientIcon.png"));
         removeAClientLabel.setText("REMOVE A CLIENT");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
@@ -1291,7 +1315,7 @@ public class ParkInterface extends JFrame implements ActionListener
             public void keyTyped(KeyEvent e)
             {
                 String chars = "0123456789";
-                if(!chars.contains(e.getKeyChar()+"") || cpfTf.getText().length() > 10)
+                if (!chars.contains(e.getKeyChar() + "") || cpfTf.getText().length() > 10)
                 {
                     e.consume();
                 }
@@ -1300,22 +1324,24 @@ public class ParkInterface extends JFrame implements ActionListener
 
         removeClientButton.setText("Remove");
         removeClientButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        removeClientButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        removeClientButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
-                if(canRemoveAClient)
+                if (canRemoveAClient)
                 {
                     Boolean removed = sysControl.removeClient(cpfTf.getText());
                     if (removed)
                     {
                         JOptionPane.showMessageDialog(null, "Client successfully removed. ");
                         canRemoveAClient = false;
+                        infoTa.setText("");
                     }
                     else
                     {
                         canRemoveAClient = false;
                         infoTa.setText("Client cannot be removed. Try to find again.");
-
                     }
                 }
             }
@@ -1324,8 +1350,10 @@ public class ParkInterface extends JFrame implements ActionListener
         cancelButton.setText("Cancel");
         cancelButton.setToolTipText("");
         cancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 removeAClientFrame.dispose();
 
@@ -1334,19 +1362,21 @@ public class ParkInterface extends JFrame implements ActionListener
 
         infoTa.setEditable(false);
         infoTa.setColumns(20);
-        infoTa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        infoTa.setFont(new java.awt.Font("Arial", 0, 12));
         infoTa.setRows(5);
         jScrollPane2.setViewportView(infoTa);
 
         findButton.setText("Find");
-        findButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        findButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
 
                 String client = sysControl.findClient("", cpfTf.getText(), "");
 
-                if(client == null)
+                if (client == null)
                 {
-                       infoTa.setText(sysControl.getErrorString());
+                    infoTa.setText(sysControl.getErrorString());
                 }
                 else
                 {
@@ -1441,6 +1471,182 @@ public class ParkInterface extends JFrame implements ActionListener
         removeAClientFrame.setVisible(true);
 
 
+    }
+
+    public void reportWindow()
+    {
+        JFrame reportWindowFrame = new JFrame("Get a new report about your park - PARK SYSTEM v" + VERSION);
+
+
+        JPanel principalPanel = new JPanel();
+        JPanel jPanel4 = new JPanel();
+        JLabel reportLabel = new JLabel();
+        JPanel contentPanel = new JPanel();
+        JScrollPane jScrollPane1 = new JScrollPane();
+        JTextArea reportTa = new JTextArea();
+        JButton CashButton = new javax.swing.JButton();
+        JButton movementButton = new JButton();
+        JLabel jLabel1 = new JLabel();
+        JButton clearTaButton = new JButton();
+        JSeparator jSeparator1 = new JSeparator();
+        JLabel jLabel2 = new JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        reportLabel.setFont(new java.awt.Font("Arial Black", 1, 24));
+        reportLabel.setIcon(new javax.swing.ImageIcon("Icons/reports.png"));
+        reportLabel.setText("REPORTS");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(reportLabel)
+                                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(reportLabel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        contentPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        reportTa.setEditable(false);
+        reportTa.setColumns(20);
+        reportTa.setFont(new java.awt.Font("Arial", 0, 11)); //
+        reportTa.setRows(5);
+        jScrollPane1.setViewportView(reportTa);
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+                contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
+        );
+        contentPanelLayout.setVerticalGroup(
+                contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+        );
+
+        CashButton.setText("Cash Flow");
+        CashButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+
+                reportTa.setText(sysControl.returnAReportList(0) + "\n"
+                        + "=============Total Cash: R$: " + sysControl.getTotalCashValue());
+
+            }
+        });
+
+        movementButton.setText("Movement");
+        movementButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+
+                reportTa.setText(sysControl.returnAReportList(1));
+
+            }
+        });
+        jLabel1.setText("Select the type of report you want:");
+
+        clearTaButton.setText("Clear");
+        clearTaButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+
+                reportTa.setText("");
+
+            }
+        });
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel2.setText("Clear the list:");
+
+        javax.swing.GroupLayout principalPanelLayout = new javax.swing.GroupLayout(principalPanel);
+        principalPanel.setLayout(principalPanelLayout);
+        principalPanelLayout.setHorizontalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(29, 29, 29)
+                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel1)
+                                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                                .addComponent(CashButton)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(movementButton)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(clearTaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(29, 29, 29)))
+                                .addContainerGap())
+        );
+        principalPanelLayout.setVerticalGroup(
+                principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, principalPanelLayout.createSequentialGroup()
+                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                                .addGap(42, 42, 42)
+                                                                .addComponent(jLabel1))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, principalPanelLayout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(jLabel2)))
+                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(principalPanelLayout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(movementButton)
+                                                                        .addComponent(CashButton)))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, principalPanelLayout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(clearTaButton)
+                                                                .addGap(2, 2, 2))))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, principalPanelLayout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(principalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        reportWindowFrame.add(principalPanel);
+        reportWindowFrame.pack();
+        reportWindowFrame.setVisible(true);
+
 
     }
 
@@ -1455,6 +1661,14 @@ public class ParkInterface extends JFrame implements ActionListener
 
         JMenuItem exitVehicle = new JMenuItem("Exit Vehicle");
         vehiclesMenu.add(exitVehicle);
+        exitVehicle.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                exitVehicleWindow();
+            }
+        });
 
         //Client menu
         JMenu clientMenu = new JMenu("Client");
@@ -1499,11 +1713,17 @@ public class ParkInterface extends JFrame implements ActionListener
         JMenu reportsMenu = new JMenu("Reports");
         menuBar.add(reportsMenu);
 
-        JMenuItem dailyMovement = new JMenuItem("Daily Movement");
-        reportsMenu.add(dailyMovement);
+        JMenuItem newReport = new JMenuItem("Get Reports");
+        reportsMenu.add(newReport);
+        newReport.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                reportWindow();
+            }
+        });
 
-        JMenuItem cashFlow = new JMenuItem("Cash Flow");
-        reportsMenu.add(cashFlow);
 
         //About menu
         JMenu aboutMenu = new JMenu("About");
@@ -1511,6 +1731,15 @@ public class ParkInterface extends JFrame implements ActionListener
 
         JMenuItem aboutUs = new JMenuItem("About Us");
         aboutMenu.add(aboutUs);
+        aboutUs.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                JOptionPane.showMessageDialog(null, sysControl.getAboutUsString() + VERSION);
+            }
+        });
+
 
         return menuBar;
     }

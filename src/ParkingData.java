@@ -11,26 +11,47 @@ public class ParkingData
      * and/or no vacancy
      */
 
+    private Double totalCashFlow;
     private HashMap <String, Vehicle> listOfVehicles;
     private ArrayList <Client> listOfClient;
+    private ArrayList<Report> reports;
     private Boolean haveVacancy;
 
 
     public ParkingData()
     {
+        //Represents all the money entry on the park
+        totalCashFlow = 0.0;
         //represents the vehicles parked in the park
         listOfVehicles = new HashMap <>();
         //represent a collection of all clients with registry in the systemm
         listOfClient = new ArrayList <>();
+        //represent a collection of reports
+        reports = new ArrayList <>();
         // will be used to verify the vacancy
         haveVacancy = true;
+    }
+
+    public void addReportInList(Report reportType1, Report reportType0)
+    {
+        reports.add(reportType1);
+        reports.add(reportType0);
+    }
+
+    public void updateTotalCashFlow(Double value)
+    {
+        this.totalCashFlow += value;
+    }
+
+    public Double getTotalCashFlow()
+    {
+        return totalCashFlow;
     }
 
     //Set a vehicle on the list. Need to pass the plaque and a vehicle object
     public void setVehiclesOnList(String plaque, Vehicle vehicle)
     {
         listOfVehicles.put(plaque, vehicle);
-
     }
 
     public void setClientOnList(Client client)
@@ -48,7 +69,6 @@ public class ParkingData
         listOfVehicles.remove(plaque);
     }
 
-
     public List <Client> getClientFromList(String name, String cpf, String contact)
     {
         List <Client> clientReturn = new ArrayList <>();
@@ -64,18 +84,44 @@ public class ParkingData
 
     }
 
+    //verify the arraylist to found the client owner of the cpf
+    //if found the cpf, remove the client (after the loop)
     public Boolean removeAClientFromList(String cpf)
     {
         Boolean deleted = false;
+        Client clientToDelete = null;
         for(Client client : listOfClient)
         {
             if(client.getCpf().equals(cpf))
             {
-                listOfClient.remove(client);
-                deleted = true;
+                    deleted = true;
+                    clientToDelete = client;
             }
         }
-            return deleted;
+        if(deleted)
+        {
+            listOfClient.remove(clientToDelete);
+        }
+
+        return deleted;
+
     }
+
+    public List<Report> getAListOfReport(int type)
+    {
+        List<Report> returnReports = new ArrayList <>();
+
+        for(Report report : reports)
+        {
+            if(report.getReportType() == type)
+            {
+                returnReports.add(report);
+            }
+        }
+
+        return returnReports;
+    }
+
+
 
 }
