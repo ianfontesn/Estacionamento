@@ -22,7 +22,7 @@ Um projeto de conclusão de módulo a escolha do aluno. Foi escolhido um gerenci
 
 ### Interface Gráfica
 <h1 align="center">
-  <img alt="Estrutura de classes" src="./UseFul/interface.png" />
+  <img alt="Estrutura de classes" src="./UseFul/Interface.png" />
 </h1>
 
 ### License
