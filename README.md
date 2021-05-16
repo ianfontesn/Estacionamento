@@ -1,16 +1,31 @@
 # Sistema de Estacionamento
 
-## Um projeto de conclusão de módulo a escolha do aluno. Foi escolhido um gerenciador de estacionamento com funcionalidads básicas onde será implementado os paradigmas de POO ensinados no módulo da faculdade.
+## Descrição
+Um projeto de conclusão de módulo a escolha do aluno. Foi escolhido um gerenciador de estacionamento com funcionalidads básicas onde será implementado os paradigmas de POO ensinados no módulo da faculdade.
 
 ### 🛠 Tecnologias
 - [Java](https://www.java.com/pt-BR/)
 
-## Estrutura de classes
+### 🛠 Principais funcionalidades
+- Entrar com um veiculo no estacionamento
+- Sair com um veiculo do estacionamento
+- Cadastrar um cliente
+- Remover um cliente
+- Procurar um cliente
+- Visulizar relatório de Cash Flow
+- Visulizar relatório de movimentação de veiculos no estacionamento
+
+### Estrutura de classes
 <h1 align="center">
-  <img alt="Estrutura de classes" src="./Useful/estacionamento-Classes.png" />
+  <img alt="Estrutura de classes" src="./UseFul/estacionamento-Classes.png" />
 </h1>
 
-## License
+### Interface Gráfica
+<h1 align="center">
+  <img alt="Estrutura de classes" src="./UseFul/interface.png" />
+</h1>
+
+### License
 MIT License
 
 Copyright (c) <2020> <Seu Nome>
