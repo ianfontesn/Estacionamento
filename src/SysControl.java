@@ -12,9 +12,9 @@ public class SysControl
      * objects that represent all the entities of the
      * system will be instantiated.
      */
-    private ParkingData parkingData;
-    private Prices prices;
-    private CpfTester cpfTester;
+    private final ParkingData parkingData;
+    private final Prices prices;
+    private final CpfTester cpfTester;
     private Integer idVehicle = 0;
     private Integer idClient = 0;
 
@@ -34,8 +34,7 @@ public class SysControl
     public String setANewClientId()
     {
         idClient++;
-        String id = idClient.toString();
-        return id;
+        return idClient.toString();
     }
 
     public String getClientId()
@@ -46,37 +45,31 @@ public class SysControl
     public String setANewVehicleId()
     {
         idVehicle++;
-        String id = idVehicle.toString();
-        return id;
+        return idVehicle.toString();
+
     }
 
     public Date getDateNow()
     {
-        Date data = Calendar.getInstance().getTime();
-        return data;
+        return Calendar.getInstance().getTime();
     }
 
     public String dateNow()
     {
         Date data = Calendar.getInstance().getTime();
         DateFormat d = DateFormat.getDateInstance(DateFormat.SHORT);
-        String dateNow = d.format(data);
-
-        return dateNow;
+        return d.format(data);
     }
 
     public String hourNow()
     {
         Date data = Calendar.getInstance().getTime();
         DateFormat h = DateFormat.getTimeInstance();
-        String hourNow = h.format(data);
-
-        return hourNow;
+        return h.format(data);
     }
 
     public Client createNewClient(String id, String name, String gender, String cpf, String contact, String email)
     {
-
         Client client = null;
 
         if(name.isEmpty())
@@ -117,21 +110,14 @@ public class SysControl
         }
         else
         {
-            if (type.equals("CAR"))
+            switch (type)
             {
-                vehicle = new Car(id, plaque, model, color, entryHour, client, type);
+                case "CAR" -> vehicle = new Car(id, plaque, model, color, entryHour, client, type);
+                case "MOTORCYCLE" -> vehicle = new Motorcycle(id, plaque, model, color, entryHour, client, type);
+                case "TRUCK" -> vehicle = new Truck(id, plaque, model, color, entryHour, client, type);
             }
-            else if (type.equals("MOTORCYCLE"))
-            {
-                vehicle = new Motorcycle(id, plaque, model, color, entryHour, client, type);
-            }
-            else if (type.equals("TRUCK"))
-            {
-                vehicle = new Truck(id, plaque, model, color, entryHour, client, type);
-            }
-
         }
-            return vehicle;
+        return vehicle;
     }
 
     // add a new vehicle on the list of vehicles in parkingData.
@@ -277,15 +263,38 @@ public class SysControl
     public String getTotalCashValue()
     {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-        String returnString = decimalFormat.format(parkingData.getTotalCashFlow());
+        return decimalFormat.format(parkingData.getTotalCashFlow());
+    }
 
+
+    public String getPricesNow()
+    {
+        String returnString = "====PRICES=====\n" +
+                "CAR: R$" + prices.getCAR_PRICE() + "\nMOTORCYCLE: R$" + prices.getMOTORCYCLE_PRICE() +
+                "\nTRUCK: R$" + prices.getTRUCK_PRICE();;
+                return returnString;
+    }
+
+    public String changePriceValue(String type, Double value)
+    {
+       String returnString = "====PRICES=====";
+       Boolean priceChanged = prices.changePrice(type, value);
+       if(priceChanged)
+       {
+           returnString += "\nCAR: R$" + prices.getCAR_PRICE() + "\nMOTORCYCLE: R$" + prices.getMOTORCYCLE_PRICE() +
+                   "\nTRUCK: R$" + prices.getTRUCK_PRICE();
+       }
+        else
+       {
+           errorString = "Cannot change the prices. Use this format: 12.00";
+           returnString = null;
+       }
         return returnString;
     }
 
     public String getAboutUsString()
     {
-        String aboutUs = " - Park System \n - Created by: IAN FONTES / AKYNATAN \n - Version v";
-        return aboutUs;
+        return " - Park System \n - Created by: IAN FONTES / AKYNATAN \n - Version v";
     }
 
     public String getErrorString()

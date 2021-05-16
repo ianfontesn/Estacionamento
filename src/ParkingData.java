@@ -12,10 +12,10 @@ public class ParkingData
      */
 
     private Double totalCashFlow;
-    private HashMap <String, Vehicle> listOfVehicles;
-    private ArrayList <Client> listOfClient;
-    private ArrayList<Report> reports;
-    private Boolean haveVacancy;
+    private final HashMap <String, Vehicle> listOfVehicles;
+    private final ArrayList <Client> listOfClient;
+    private final ArrayList<Report> reports;
+    private final Boolean haveVacancy;
 
 
     public ParkingData()
