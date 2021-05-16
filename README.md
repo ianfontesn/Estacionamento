@@ -15,11 +15,6 @@ Um projeto de conclusão de módulo a escolha do aluno. Foi escolhido um gerenci
 - Visulizar relatório de Cash Flow
 - Visulizar relatório de movimentação de veiculos no estacionamento
 
-### Estrutura de classes
-<h1 align="center">
-  <img alt="Estrutura de classes" src="./Useful/estacionamento-Classes.png" />
-</h1>
-
 ### Interface Gráfica
 <h1 align="center">
   <img alt="Interface Gráfica" src="./Useful/Interface.png" />
