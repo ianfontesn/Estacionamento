@@ -7,7 +7,7 @@
 
 ## Estrutura de classes
 <h1 align="center">
-  <img alt="Estrutura de classes" src="./UseFul/estacionamento-Classes.png" />
+  <img alt="Estrutura de classes" src="./Useful/estacionamento-Classes.png" />
 </h1>
 
 ## License
